@@ -30,6 +30,11 @@ body{
         width:95%;
     }
 }
+
+a.disabled {
+    color: gray !important;
+    pointer-events: none;
+  }
 .blinking{
     animation:blinkingText 1.2s infinite;
 }

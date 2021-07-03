@@ -16,7 +16,7 @@ mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true });
 mongoose.connection.once("open", () => {
   console.log("connected to MONGO");
 });
-
+var link="";
 var ques=["What is the full form of HTML?","What is the primary use of ESLint?","What is the primary code to establish connection between MySQL database and PHP script?","What is the meaning of Error 404?","What is the difference between GET and POST requests?","Name any frontend framework that doesn't use Javascript.","Why should one prefer NodeJS over Apache servers?"];
 var username,userid,pass;
 app.get("/",(req,res)=>{
@@ -66,7 +66,7 @@ app.post("/signup",(req,res)=>{
 });
 
 app.get("/test",(req,res)=>{
-    res.render("test",{userid:userid,pass:pass});
+    res.render("test",{userid:userid,pass:pass,link:link});
     userid=userid;
     pass=pass;
 });
@@ -78,7 +78,7 @@ app.get("/test/domain",(req,res)=>{
 
 app.post("/test/domain",(req,res)=>{
   var answers=req.body.a;
-  console.log(answers);
+  link="disabled";
   Answer.create({username: userid, password: pass, question: ques, answer:req.body.a},function(err,user){
     console.log(user);
     try{

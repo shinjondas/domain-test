@@ -1,0 +1,35 @@
+<%- include("header") -%>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Domain Tests</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+        
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                <a class="nav-link" href="/test">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/test/domain">Software Domain</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/test/invalid">Hardware Domain</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0 user-data">
+                <i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;Hello, <%= pass %>
+            </form>
+            </div>
+        </nav>
+        <div class="container container1">
+            <ul>
+                <li><a href="/test/domain">Link to Software Domain Tests.</a><sup class="blinking">NEW</sup></li>
+                <li><a href=/test/invalid>Link to Hardware Domain Tests.</a><sup class="blinking">NEW</sup></li>
+                <li>ML Test scheduled at <b>dd/mm/yyyy</b> at <b>hh:mm</b></li>
+                <li>WebDev Test scheduled at <b>dd/mm/yyyy</b> at <b>hh:mm</b></li>
+                <li>Hardware Tests scheduled at <b>dd/mm/yyyy</b> at <b>hh:mm</b></li>
+            </ul>
+        </div>
+        <%- include("footer") -%>

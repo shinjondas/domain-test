@@ -1,0 +1,16 @@
+<%- include("header") -%>
+<div class="container1 answers_container">
+  <h1>Welcome,<%= username %></h1>
+  <form action="/answers" method="POST" class="answers_form">
+    <label for="users">Examiners List</label>
+    <br />
+    <select name="users">
+      <% for( let index = 0; index < users.length; index++ ) { %>
+      <option value="<%= passwords[index] %>"><%= users[index] %></option>
+      <% } %>
+    </select>
+    <br />
+    <button type="submit" class="btn btn-primary">Show Answers</button>
+  </form>
+</div>
+<%- include("footer") -%>

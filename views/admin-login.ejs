@@ -1,0 +1,32 @@
+<%- include("header") -%>
+<body>
+  <div class="container container1">
+    <h3>Admin Login</h3>
+    <br />
+    <form method="POST" action="/admin-login">
+      <div class="form-group">
+        <label for="email">Email address:</label>
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Enter email"
+          id="email"
+          name="username"
+        />
+      </div>
+      <div class="form-group">
+        <label for="pwd">Registration Number:</label>
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Enter registration number"
+          id="pwd"
+          name="password"
+        />
+      </div>
+      <div class="form-group"></div>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+  </div>
+  <%- include("footer") -%>
+</body>

@@ -1,61 +1,124 @@
-body{
+body {
     -webkit-touch-callout: none;
-    -webkit-user-select: none; 
-     -khtml-user-select: none; 
-       -moz-user-select: none; 
-        -ms-user-select: none; 
-            user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* background: #FC5C7D;  fallback for old browsers */
+    /* background: -webkit-linear-gradient(to right, #6A82FB, #FC5C7D);  Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #6A82FB, #FC5C7D);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
-.container1{
-    width:25%;
+
+.container1 {
+    width: 25%;
     margin-top: 15vh;
-    background-color: rgb(221, 221, 221);
-    border:1px solid transparent;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid transparent;
     border-radius: 20px;
-    padding:5vh;
+    padding: 5vh;
 }
-.container1 li a{
-    color:#000;
+
+.container1:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.container1 ul {
+    list-style: none;
+}
+
+.container1 li a {
+    color: #000;
     text-decoration: none;
     border-bottom: 1px solid transparent;
 }
-.container li a:hover{
+
+.container li a:hover {
     border-bottom: 1px solid #000;
 }
-@media screen and (max-width:900px) {
-    .user-data{
+
+.answers_container {
+    align-items: center;
+    margin: 15vh auto;
+    text-align: center;
+    width: 40%;
+}
+
+.answers_container h1 {
+    color: chocolate;
+    margin-bottom: 3vh;
+}
+
+.answers_form label {
+    margin-bottom: 2vh;
+    font-size: 1.5rem;
+}
+
+.answers_form select {
+    padding: 1.5vh 8vh;
+    text-align: center;
+}
+
+.answers_form button {
+    margin: 2vh auto 2vh auto;
+}
+
+@media screen and (max-width:1164px) {
+    .user-data {
         display: none;
     }
-    .container1{
-        width:95%;
+
+    .container1 {
+        width: 95%;
     }
 }
 
 a.disabled {
     color: gray !important;
     pointer-events: none;
-  }
-.blinking{
-    animation:blinkingText 1.2s infinite;
 }
-@keyframes blinkingText{
-    0%{     color: rgb(41, 119, 223);    }
-    49%{    color: rgb(41, 119, 223); }
-    60%{    color: transparent; }
-    99%{    color:transparent;  }
-    100%{   color: rgb(41, 119, 223);    }
+
+.blinking {
+    animation: blinkingText 1.2s infinite;
 }
-footer{
+
+@keyframes blinkingText {
+    0% {
+        color: rgb(41, 119, 223);
+    }
+
+    49% {
+        color: rgb(41, 119, 223);
+    }
+
+    60% {
+        color: transparent;
+    }
+
+    99% {
+        color: transparent;
+    }
+
+    100% {
+        color: rgb(41, 119, 223);
+    }
+}
+
+footer {
     background-color: rgb(245, 245, 245);
-    position:absolute;
-    bottom:0;
-    width:100%;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
-.test{
-    width:50%;
+
+.test {
+    width: 50%;
 }
-@media screen and (max-width:550px){
-    .test{
-        width:100%;
+
+@media screen and (max-width:550px) {
+    .test {
+        width: 100%;
     }
 }

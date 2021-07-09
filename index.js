@@ -78,8 +78,8 @@ app.get("/test", (req, res) => {
     pass: pass,
     link: link
   });
-  userid = userid;
-  pass = pass;
+  /*userid = userid;
+  pass = pass;*/
 });
 
 app.get("/test/domain", (req, res) => {

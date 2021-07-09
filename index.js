@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const ejs = require("ejs");
+const cookieParser = require('cookie-parser');
 require("dotenv").config();
 const User = require("./models/user.model");
 const Answer = require("./models/answer.model");
@@ -12,6 +13,8 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(cookieParser());
+
 app.use(express.static("public"));
 // mongo_uri="mongodb+srv://admin-ieeecas:ieeecasmongodb@cluster0.yozy1.mongodb.net/test?retryWrites=true&w=majority"
 mongoose.connect("mongodb+srv://admin-ieeecas:ieeecasmongodb@cluster0.yozy1.mongodb.net/test?retryWrites=true&w=majority", {
@@ -29,9 +32,6 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-  userid = req.body.username;
-  pass = req.body.password;
-  console.log(userid + " " + pass);
   User.findOne({
     username: req.body.username
   }, function (err, user) {
@@ -39,7 +39,11 @@ app.post("/", (req, res) => {
       if (user.password == req.body.password) {
         logU = true;
         message = "";
+        res.cookie("username", "shinjon.das2019@vitstudent.ac.in");
+        res.cookie("password","19BIT0218");
+        console.log(req.cookies);
         res.redirect("/test");
+        
       } else {
         res.redirect("/");
         message = "Invalid Password";
@@ -74,8 +78,8 @@ app.post("/signup", (req, res) => {
 
 app.get("/test", (req, res) => {
   res.render("test", {
-    userid: userid,
-    pass: pass,
+    userid: req.cookies['username'],
+    pass: req.cookies['password'],
     link: link
   });
   /*userid = userid;
@@ -97,17 +101,17 @@ app.get("/test/domain", (req, res) => {
 
 app.post("/test/domain", (req, res) => {
   var answers = req.body.a;
-  link = "disabled";
+  link = " ";
   Answer.create({
-    username: userid,
-    password: pass,
+    username: req.cookies['username'],
+    password: req.cookies['password'],
     question: ques,
     answer: req.body.a
   }, function (err, user) {
     console.log(user);
     try {
       console.log(user);
-      res.redirect("/test");
+      res.redirect("/");
     } catch (err) {
       console.log(err);
     }
@@ -188,6 +192,7 @@ app.post('/answers/show', (req, res) => {
 })
 
 const port = process.env.PORT || 3000;
-app.listen(port, function () {
+app.listen(port, function (err) {
+  if (err) throw err;
   console.log("Server started successfully");
 });

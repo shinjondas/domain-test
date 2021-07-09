@@ -16,34 +16,12 @@
   </nav>
     <div class="container test" style="margin-top:10vh;margin-bottom: 20vh;">
         <form id="myForm" action="/test/domain" method="POST">
+          <% for( let i = 0; i < ques.length; i++ ) { %>
             <div class="form-group">
-                <label for="exampleFormControlTextarea1">Question 1:<br><%= q1 %></label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="a[]"></textarea>
-              </div>
-              <div class="form-group">
-                <label for="exampleFormControlTextarea1">Question 2:<br><%= q2 %></label>
-                <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" name="a[]"></textarea>
-              </div>
-              <div class="form-group">
-                <label for="exampleFormControlTextarea1">Question 3:<br><%= q3 %></label>
-                <textarea class="form-control" id="exampleFormControlTextarea3" rows="3" name="a[]"></textarea>
-              </div>
-              <div class="form-group">
-                <label for="exampleFormControlTextarea1">Question 4:<br><%= q4 %></label>
-                <textarea class="form-control" id="exampleFormControlTextarea4" rows="3" name="a[]"></textarea>
-              </div>
-              <div class="form-group">
-                <label for="exampleFormControlTextarea1">Question 5:<br><%= q5 %></label>
-                <textarea class="form-control" id="exampleFormControlTextarea5" rows="3" name="a[]"></textarea>
-              </div>
-              <div class="form-group">
-                <label for="exampleFormControlTextarea1">Question 6:<br><%= q6 %></label>
-                <textarea class="form-control" id="exampleFormControlTextarea6" rows="3" name="a[]"></textarea>
-              </div>
-              <div class="form-group">
-                <label for="exampleFormControlTextarea1">Question 7:<br><%= q7 %></label>
-                <textarea class="form-control" id="exampleFormControlTextarea7" rows="3" name="a[]"></textarea>
-              </div>
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %></label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="a[]"></textarea>
+            </div>
+          <% } %>
               <center>
                 <div class="btn-group" role="group">
                     <a href="/test" class="btn btn-danger" style="padding:0.75vw 1vw">Exit</a>

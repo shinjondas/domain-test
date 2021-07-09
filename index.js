@@ -26,7 +26,6 @@ mongoose.connection.once("open", () => {
 });
 var link = "";
 var ques = ["What is the full form of HTML?", "What is the primary use of ESLint?", "What is the primary code to establish connection between MySQL database and PHP script?", "What is the meaning of Error 404?", "What is the difference between GET and POST requests?", "Name any frontend framework that doesn't use Javascript.", "Why should one prefer NodeJS over Apache servers?"];
-var username, userid, pass, admin_pass, admin_user, found_answers = [];
 app.get("/", (req, res) => {
   res.render("login");
 });
@@ -87,15 +86,8 @@ app.get("/test", (req, res) => {
 });
 
 app.get("/test/domain", (req, res) => {
-  var k = 0;
   res.render("domtest", {
-    q1: ques[k++],
-    q2: ques[k++],
-    q3: ques[k++],
-    q4: ques[k++],
-    q5: ques[k++],
-    q6: ques[k++],
-    q7: ques[k]
+    ques:ques
   });
 })
 
@@ -127,13 +119,13 @@ app.get("/admin-login", (req, res) => {
 })
 
 app.post("/admin-login", (req, res) => {
-  admin_user = req.body.username;
-  admin_pass = req.body.password;
+  let admin_user = req.cookies['username'];
+  let admin_pass = req.cookies['password'];
   User.findOne({
-    username: req.body.username
+    username: admin_user
   }, function (err, user) {
     try {
-      if (user.password == req.body.password) {
+      if (user.password == admin_pass) {
         logU = true;
         message = "";
         res.redirect("/answers");
@@ -151,6 +143,7 @@ app.post("/admin-login", (req, res) => {
 })
 
 app.get('/answers', async (req, res) => {
+  const admin_pass= req.cookies['password'];
   const users = await User.find({});
   const usernames = users.map(value => value.name);
   const passwordsArray = users.map(value => value.password);
@@ -159,32 +152,33 @@ app.get('/answers', async (req, res) => {
     users: usernames,
     passwords: passwordsArray
   });
-  // res.json(passwordsArray);
 })
 
-app.post('/answers', async (req, res) => {
-  found_answers = await Answer.findOne({
-    password: req.body.users
+app.post('/answers', (req, res) => {
+  let pass = req.body.users;
+  Answer.findOne({
+    password: pass
   }, (err, user) => {
     if (!err) {
-      console.log(user);
+      res.cookie("answers", user);
+      res.redirect("/answers/show");
     } else {
       console.error(err);
       res.redirect('/answers');
     }
   });
-  res.redirect('/answers/show');
 })
 
 app.get('/answers/show', (req, res) => {
-  if (found_answers == null) {
-    found_answers = ['Not Attempted'];
-    ques = [""];
+  let answers = req.cookies['answers'];
+  if (answers == null) {
+    answers = ['Not Attempted'];
+    ques=[""];
   }
-  res.render('show_result', {
-    questions: ques,
-    answers: found_answers
-  });
+  res.render('result',{
+    questions:ques,
+    answers:answers["answer"]
+  })
 })
 
 app.post('/answers/show', (req, res) => {

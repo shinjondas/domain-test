@@ -1,0 +1,17 @@
+<%- include("header") -%>
+<div class="container">
+  <h1>Answers</h1>
+  <br>
+  <% for( let i = 0; i < answers.length; i++ ) { %>
+  <%= questions[i] %>
+  <br>
+  <%= answers[i] %>
+  <br>
+  <% } %>
+</div>
+<center>
+  <form action="/answers/show" method="POST"class="answers_form">
+    <button type="submit" class="btn btn-primary">Go Back</button>
+  </form>
+</center>
+<%- include("footer") -%>

@@ -64,7 +64,7 @@ app.post("/signup", (req, res) => {
     try {
       console.log(user);
       logU = true;
-      res.redirect("/test");
+      res.redirect("/");
     } catch (err) {
       console.log(err);
     }

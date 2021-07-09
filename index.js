@@ -121,7 +121,7 @@ app.get("/admin-login", (req, res) => {
 app.post("/admin-login", (req, res) => {
   let admin_user = req.body.username;
   let admin_pass = req.body.password;
-  if(admin_user==="ieeecasadmin@gmail.com" && admin_pass==="ieeecas2021"){
+  if(admin_user==="admin" && admin_pass==="Tr9dasAQ4I"){
     res.redirect('/answers');
   } else {
     res.redirect('/admin-login');

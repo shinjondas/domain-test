@@ -101,6 +101,8 @@ app.post("/test/domain", (req, res) => {
     answer: req.body.a
   }, function (err, user) {
     console.log(user);
+    res.clearCookie('username');
+    res.clearCookie('password');
     try {
       console.log(user);
       res.redirect("/");

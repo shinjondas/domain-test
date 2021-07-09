@@ -119,27 +119,13 @@ app.get("/admin-login", (req, res) => {
 })
 
 app.post("/admin-login", (req, res) => {
-  let admin_user = req.cookies['username'];
-  let admin_pass = req.cookies['password'];
-  User.findOne({
-    username: admin_user
-  }, function (err, user) {
-    try {
-      if (user.password == admin_pass) {
-        logU = true;
-        message = "";
-        res.redirect("/answers");
-      } else {
-        res.redirect("/admin-login");
-        message = "Invalid Password";
-        console.log(message);
-      }
-    } catch (err) {
-      res.redirect("/");
-      message = "Invalid Username";
-      console.log(message);
-    }
-  });
+  let admin_user = req.body.username;
+  let admin_pass = req.body.password;
+  if(admin_user==="ieeecasadmin@gmail.com" && admin_pass==="ieeecas2021"){
+    res.redirect('/answers');
+  } else {
+    res.redirect('/admin-login');
+  }
 })
 
 app.get('/answers', async (req, res) => {
@@ -171,12 +157,12 @@ app.post('/answers', (req, res) => {
 
 app.get('/answers/show', (req, res) => {
   let answers = req.cookies['answers'];
-  if (answers == null) {
-    answers = ['Not Attempted'];
-    ques=[""];
+  if (answers.answer === null) {
+    answers.answer = ['Not Attempted'];
+    answers.question=[''];
   }
   res.render('result',{
-    questions:ques,
+    questions:answers["question"],
     answers:answers["answer"]
   })
 })

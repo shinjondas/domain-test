@@ -39,8 +39,8 @@ app.post("/", (req, res) => {
       if (user.password == req.body.password) {
         logU = true;
         message = "";
-        res.cookie("username", "shinjon.das2019@vitstudent.ac.in");
-        res.cookie("password","19BIT0218");
+        res.cookie("username", req.body.username);
+        res.cookie("password",req.body.password);
         console.log(req.cookies);
         res.redirect("/test");
         

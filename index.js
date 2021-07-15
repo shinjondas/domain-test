@@ -148,10 +148,13 @@ app.post('/answers', (req, res) => {
     password: pass
   }, (err, user) => {
     if (!err) {
-      let datetime=user._id.getTimestamp().toString();
-      console.log(datetime);
+      let d=user._id.getTimestamp();
+      let dt = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate() + " " + (d.getHours()+5) + ":" + (d.getMinutes()+30) + ":" + d.getSeconds();
+      if(d.getMinutes()>=30){
+      dt = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate() + " " + (d.getHours()+6) + ":" + (d.getMinutes()-30) + ":" + d.getSeconds();
+      }
       res.cookie("answers", user);
-      res.cookie("datetime",datetime);
+      res.cookie("datetime",dt);
       res.redirect("/answers/show");
     } else {
       console.error(err);

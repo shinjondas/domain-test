@@ -149,10 +149,14 @@ app.post('/answers', (req, res) => {
   }, (err, user) => {
     if (!err) {
       let d=user._id.getTimestamp();
+<<<<<<< HEAD
       let dt = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate() + " " + (d.getHours()+5) + ":" + (d.getMinutes()+30) + ":" + d.getSeconds();
       if(d.getMinutes()>=30){
       dt = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate() + " " + (d.getHours()+6) + ":" + (d.getMinutes()-30) + ":" + d.getSeconds();
       }
+=======
+      let dt = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+>>>>>>> 54b2bf8d7cb5e0885a1dd2433a2024932b5c7a1c
       res.cookie("answers", user);
       res.cookie("datetime",dt);
       res.redirect("/answers/show");

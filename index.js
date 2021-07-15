@@ -167,10 +167,20 @@ app.get('/answers/show', (req, res) => {
     answers.answer = ['Not Attempted'];
     answers.question=[''];
   }
+  let [date,t] = datetime.split("T");
+  let time = t.split(".")[0];
+  time = time.split(":");
+  time[0] = String(Number(time[0]) + 5);
+  time[1] = String(Number(time[1]) + 30);
+  if(time[1]>60){
+    time[0] = String(Number(time[0]) + 1);
+    time[1] = String(Number(time[1]) - 60);
+  }
+  time = time.join(":");
   res.render('result',{
     questions:answers["question"],
     answers:answers["answer"],
-    datetime:datetime
+    datetime:[date,time]
   })
 })
 

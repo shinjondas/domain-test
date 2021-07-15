@@ -1,6 +1,6 @@
 <%- include("header") -%>
 <div class="container">
-  <p>Submitted:  <%= datetime %></p> 
+  <p>Submitted:  <%= datetime[0] %> <%=datetime[1] %></p> 
   <h1>Answers</h1>
   <br>
   <% for( let i = 0; i < answers.length; i++ ) { %>

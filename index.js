@@ -149,11 +149,9 @@ app.post('/answers', (req, res) => {
   }, (err, user) => {
     if (!err) {
       let datetime=user._id.getTimestamp().toString();
-      
-      let d=datetime.substr(0,9);
-      let t=datetime.substr(11,23);
-      console.log(d+" "+t);
+      console.log(datetime);
       res.cookie("answers", user);
+      res.cookie("datetime",datetime);
       res.redirect("/answers/show");
     } else {
       console.error(err);
@@ -163,6 +161,7 @@ app.post('/answers', (req, res) => {
 })
 
 app.get('/answers/show', (req, res) => {
+  let datetime=req.cookies['datetime'];
   let answers = req.cookies['answers'];
   if (answers.answer === null) {
     answers.answer = ['Not Attempted'];
@@ -170,7 +169,8 @@ app.get('/answers/show', (req, res) => {
   }
   res.render('result',{
     questions:answers["question"],
-    answers:answers["answer"]
+    answers:answers["answer"],
+    datetime:datetime
   })
 })
 

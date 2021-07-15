@@ -148,6 +148,11 @@ app.post('/answers', (req, res) => {
     password: pass
   }, (err, user) => {
     if (!err) {
+      let datetime=user._id.getTimestamp().toString();
+      
+      let d=datetime.substr(0,9);
+      let t=datetime.substr(11,23);
+      console.log(d+" "+t);
       res.cookie("answers", user);
       res.redirect("/answers/show");
     } else {

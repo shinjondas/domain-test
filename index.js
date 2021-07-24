@@ -2,65 +2,88 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const ejs = require("ejs");
-const cookieParser = require('cookie-parser');
+const cookieParser = require("cookie-parser");
+const { validateUserInput } = require("./util/validators");
 require("dotenv").config();
 const User = require("./models/user.model");
 const Answer = require("./models/answer.model");
 
 const app = express();
 
-app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.set("view engine", "ejs");
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 app.use(cookieParser());
 
 app.use(express.static("public"));
 // mongo_uri="mongodb+srv://admin-ieeecas:ieeecasmongodb@cluster0.yozy1.mongodb.net/test?retryWrites=true&w=majority"
-mongoose.connect("mongodb+srv://admin-ieeecas:ieeecasmongodb@cluster0.yozy1.mongodb.net/test?retryWrites=true&w=majority", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+mongoose.connect(
+  "mongodb+srv://admin-ieeecas:ieeecasmongodb@cluster0.yozy1.mongodb.net/test?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 mongoose.connection.once("open", () => {
   console.log("connected to MONGO");
 });
 var link = "";
-var ques = ["What is the full form of HTML?", "What is the primary use of ESLint?", "What is the primary code to establish connection between MySQL database and PHP script?", "What is the meaning of Error 404?", "What is the difference between GET and POST requests?", "Name any frontend framework that doesn't use Javascript.", "Why should one prefer NodeJS over Apache servers?"];
+var ques = [
+  "What is the full form of HTML?",
+  "What is the primary use of ESLint?",
+  "What is the primary code to establish connection between MySQL database and PHP script?",
+  "What is the meaning of Error 404?",
+  "What is the difference between GET and POST requests?",
+  "Name any frontend framework that doesn't use Javascript.",
+  "Why should one prefer NodeJS over Apache servers?",
+];
 
-app.get("/smarty",(req,res)=>{
-  res.render('smarty');
+app.get("/smarty", (req, res) => {
+  res.render("smarty");
 });
 
-
-app.get("/", (req, res) => {
+app.get("/", (req, res, next) => {
   res.render("login");
 });
 
 app.post("/", (req, res) => {
-  User.findOne({
-    username: req.body.username
-  }, function (err, user) {
-    try {
-      if (user.password == req.body.password) {
-        logU = true;
-        message = "";
-        res.cookie("username", req.body.username);
-        res.cookie("password",req.body.password);
-        console.log(req.cookies);
-        res.redirect("/test");
-        
-      } else {
-        res.redirect("/");
-        message = "Invalid Password";
-        console.log(message);
+  let { errors, valid } = validateUserInput(
+    req.body.username,
+    req.body.password
+  );
+  if (valid) {
+    User.findOne(
+      {
+        username: req.body.username,
+      },
+      function (err, user) {
+        try {
+          if (user.password == req.body.password) {
+            logU = true;
+            message = "";
+            res.cookie("username", req.body.username);
+            res.cookie("password", req.body.password);
+            console.log(req.cookies);
+            res.redirect("/test");
+          } else {
+            res.redirect("/");
+            message = "Invalid Password";
+            console.log(message);
+          }
+        } catch (err) {
+          res.redirect("/");
+          message = "Invalid Username";
+          console.log(message);
+        }
       }
-    } catch (err) {
-      res.redirect("/");
-      message = "Invalid Username";
-      console.log(message);
-    }
-  });
-
+    );
+  } else {
+    console.log(errors);
+    res.redirect('/');
+  }
 });
 
 app.get("/signup", (req, res) => {
@@ -68,141 +91,194 @@ app.get("/signup", (req, res) => {
 });
 
 app.post("/signup", (req, res) => {
-  User.create(req.body.user, function (err, user) {
-    console.log(user);
-    try {
+  let { errors, valid } = validateUserInput(
+    req.body.username,
+    req.body.password
+  );
+  if (valid) {
+    User.create(req.body.user, function (err, user) {
       console.log(user);
-      logU = true;
-      res.redirect("/");
-    } catch (err) {
-      console.log(err);
-    }
-  });
-
+      try {
+        console.log(user);
+        logU = true;
+        res.redirect("/");
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  } else {
+    console.log(errors);
+    res.redirect('/signup')
+  }
 });
 
 app.get("/test", (req, res) => {
   /*console.log(req.cookies['username']);*/
-  if(req.cookies['username']!== undefined && req.cookies['password']!== undefined){
+  if (
+    req.cookies["username"] !== undefined &&
+    req.cookies["password"] !== undefined
+  ) {
     res.render("test", {
-      userid: req.cookies['username'],
-      pass: req.cookies['password'],
-      link: link
+      userid: req.cookies["username"],
+      pass: req.cookies["password"],
+      link: link,
     });
-  }
-  else{
+  } else {
     res.redirect("/smarty");
   }
-  
+
   /*userid = userid;
   pass = pass;*/
 });
 
 app.get("/test/domain", (req, res) => {
-  if(req.cookies['username']!== undefined && req.cookies['password']!== undefined){
-  res.render("domtest", {
-    ques:ques
-  });
-}
-else{
-  res.redirect("/smarty");
-}
-})
+  if (
+    req.cookies["username"] !== undefined &&
+    req.cookies["password"] !== undefined
+  ) {
+    res.render("domtest", {
+      ques: ques,
+    });
+  } else {
+    res.redirect("/smarty");
+  }
+});
 
 app.post("/test/domain", (req, res) => {
   var answers = req.body.a;
   link = " ";
-  Answer.create({
-    username: req.cookies['username'],
-    password: req.cookies['password'],
-    question: ques,
-    answer: req.body.a
-  }, function (err, user) {
-    console.log(user);
-    res.clearCookie('username');
-    res.clearCookie('password');
-    try {
+  Answer.create(
+    {
+      username: req.cookies["username"],
+      password: req.cookies["password"],
+      question: ques,
+      answer: req.body.a,
+    },
+    function (err, user) {
       console.log(user);
-      res.redirect("/");
-    } catch (err) {
-      console.log(err);
+      res.clearCookie("username");
+      res.clearCookie("password");
+      try {
+        console.log(user);
+        res.redirect("/");
+      } catch (err) {
+        console.log(err);
+      }
     }
-  });
-})
+  );
+});
 
 app.get("/test/invalid", (req, res) => {
   res.render("invalid");
-})
+});
 
 app.get("/admin-login", (req, res) => {
   res.render("admin-login");
-})
+});
 
 app.post("/admin-login", (req, res) => {
   let admin_user = req.body.username;
   let admin_pass = req.body.password;
-  if(admin_user==="admin" && admin_pass==="Tr9dasAQ4I"){
-    res.redirect('/answers');
-    res.cookie("adminID",admin_user);
-    res.cookie("adminPass",admin_pass);
+  if (admin_user === "admin" && admin_pass === "Tr9dasAQ4I") {
+    res.cookie("adminPass", admin_pass);
+    res.cookie("adminID", admin_user);
+    res.redirect("/answers");
   } else {
-    res.redirect('/admin-login');
+    res.redirect("/admin-login");
   }
-})
+});
 
-app.get('/answers', async (req, res) => {
-  const admin_pass= req.cookies['password'];
-  const users = await User.find({});
-  const usernames = users.map(value => value.name);
-  const passwordsArray = users.map(value => value.password);
-  res.render('answers', {
-    username: admin_pass,
-    users: usernames,
-    passwords: passwordsArray
-  });
-})
+app.get("/answers", async (req, res) => {
+  let admin_user = req.cookies["adminID"];
+  let admin_pass = req.cookies["adminPass"];
+  console.log(admin_user,admin_pass);
+  if (admin_user !== undefined && admin_pass !== undefined) {
+    const adminRegisterNumber = req.cookies["password"];
+    const users = await User.find({});
+    const usernames = users.map((value) => value.name);
+    const passwordsArray = users.map((value) => value.password);
+    res.render("answers", {
+      username: adminRegisterNumber,
+      users: usernames,
+      passwords: passwordsArray,
+    });
+  } else {
+    res.redirect("/smarty");
+  }
+});
 
-app.post('/answers', (req, res) => {
+app.post("/answers", (req, res) => {
   let pass = req.body.users;
-  Answer.findOne({
-    password: pass
-  }, (err, user) => {
-    if (!err) {
-      let d=user._id.getTimestamp();
-      let dt = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate() + " " + (d.getHours()+5) + ":" + (d.getMinutes()+30) + ":" + d.getSeconds();
-      if(d.getMinutes()>=30){
-      dt = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate() + " " + (d.getHours()+6) + ":" + (d.getMinutes()-30) + ":" + d.getSeconds();
+  Answer.findOne(
+    {
+      password: pass,
+    },
+    (err, user) => {
+      if (!err) {
+        let d = user._id.getTimestamp();
+        let dt =
+          d.getFullYear() +
+          "-" +
+          (d.getMonth() + 1) +
+          "-" +
+          d.getDate() +
+          " " +
+          (d.getHours() + 5) +
+          ":" +
+          (d.getMinutes() + 30) +
+          ":" +
+          d.getSeconds();
+        if (d.getMinutes() >= 30) {
+          dt =
+            d.getFullYear() +
+            "-" +
+            (d.getMonth() + 1) +
+            "-" +
+            d.getDate() +
+            " " +
+            (d.getHours() + 6) +
+            ":" +
+            (d.getMinutes() - 30) +
+            ":" +
+            d.getSeconds();
+        }
+        res.cookie("answers", user);
+        res.cookie("datetime", dt);
+        res.redirect("/answers/show");
+      } else {
+        console.error(err);
+        res.redirect("/answers");
       }
-      res.cookie("answers", user);
-      res.cookie("datetime",dt);
-      res.redirect("/answers/show");
-    } else {
-      console.error(err);
-      res.redirect('/answers');
     }
-  });
-})
+  );
+});
 
-app.get('/answers/show', (req, res) => {
-  let datetime=req.cookies['datetime'];
-  let answers = req.cookies['answers'];
-  if (answers.answer === null) {
-    answers.answer = ['Not Attempted'];
-    answers.question=[''];
+app.get("/answers/show", (req, res) => {
+  let admin_user = req.cookies["admin_user"];
+  let admin_pass = req.cookies["admin_pass"];
+  if (admin_user !== undefined && admin_pass !== undefined){
+    let datetime = req.cookies["datetime"];
+    let answers = req.cookies["answers"];
+    if (answers.answer === null) {
+      answers.answer = ["Not Attempted"];
+      answers.question = [""];
+    }
+    res.render("result", {
+      questions: answers["question"],
+      answers: answers["answer"],
+      datetime: datetime,
+    });
+  } else {
+    res.redirect("/smarty");
   }
-  res.render('result',{
-    questions:answers["question"],
-    answers:answers["answer"],
-    datetime:datetime
-  })
-})
+});
 
-app.post('/answers/show', (req, res) => {
-  res.redirect('/answers');
-})
+app.post("/answers/show", (req, res) => {
+  res.redirect("/answers");
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, function (err) {
   if (err) throw err;
-  console.log("Server started successfully");
+  console.log(`Server started successfully at http://localhost:${port}`);
 });

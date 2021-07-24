@@ -26,6 +26,12 @@ mongoose.connection.once("open", () => {
 });
 var link = "";
 var ques = ["What is the full form of HTML?", "What is the primary use of ESLint?", "What is the primary code to establish connection between MySQL database and PHP script?", "What is the meaning of Error 404?", "What is the difference between GET and POST requests?", "Name any frontend framework that doesn't use Javascript.", "Why should one prefer NodeJS over Apache servers?"];
+
+app.get("/smarty",(req,res)=>{
+  res.render('smarty');
+});
+
+
 app.get("/", (req, res) => {
   res.render("login");
 });
@@ -76,19 +82,31 @@ app.post("/signup", (req, res) => {
 });
 
 app.get("/test", (req, res) => {
-  res.render("test", {
-    userid: req.cookies['username'],
-    pass: req.cookies['password'],
-    link: link
-  });
+  /*console.log(req.cookies['username']);*/
+  if(req.cookies['username']!== undefined && req.cookies['password']!== undefined){
+    res.render("test", {
+      userid: req.cookies['username'],
+      pass: req.cookies['password'],
+      link: link
+    });
+  }
+  else{
+    res.redirect("/smarty");
+  }
+  
   /*userid = userid;
   pass = pass;*/
 });
 
 app.get("/test/domain", (req, res) => {
+  if(req.cookies['username']!== undefined && req.cookies['password']!== undefined){
   res.render("domtest", {
     ques:ques
   });
+}
+else{
+  res.redirect("/smarty");
+}
 })
 
 app.post("/test/domain", (req, res) => {
@@ -125,6 +143,8 @@ app.post("/admin-login", (req, res) => {
   let admin_pass = req.body.password;
   if(admin_user==="admin" && admin_pass==="Tr9dasAQ4I"){
     res.redirect('/answers');
+    res.cookie("adminID",admin_user);
+    res.cookie("adminPass",admin_pass);
   } else {
     res.redirect('/admin-login');
   }

@@ -254,9 +254,9 @@ app.post("/answers", (req, res) => {
 });
 
 app.get("/answers/show", (req, res) => {
-  let admin_user = req.cookies["admin_user"];
-  let admin_pass = req.cookies["admin_pass"];
-  if (admin_user !== undefined && admin_pass !== undefined){
+  let admin_user = req.cookies["adminID"];
+  let admin_pass = req.cookies["adminPass"];
+  if (admin_user != undefined && admin_pass != undefined){
     let datetime = req.cookies["datetime"];
     let answers = req.cookies["answers"];
     if (answers.answer === null) {

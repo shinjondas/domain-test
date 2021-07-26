@@ -32,8 +32,8 @@ mongoose.connection.once("open", () => {
 });
 var link = "";
 var ques = [
-  "What is the full form of HTML?",
-  "What is the primary use of ESLint?",
+  "What are CMS? Elaborate on one primary advantage of having locally developed application over Moodle-based software.",
+  "Nodemon is a package to be installed by npm. What is the primary use of 'nodemon'?",
   "What is the primary code to establish connection between MySQL database and PHP script?",
   "What is the meaning of Error 404?",
   "What is the difference between GET and POST requests?",

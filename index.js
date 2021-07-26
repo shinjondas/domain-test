@@ -91,11 +91,6 @@ app.get("/signup", (req, res) => {
 });
 
 app.post("/signup", (req, res) => {
-  let { errors, valid } = validateUserInput(
-    req.body.username,
-    req.body.password
-  );
-  if (valid) {
     User.create(req.body.user, function (err, user) {
       console.log(user);
       try {
@@ -106,10 +101,6 @@ app.post("/signup", (req, res) => {
         console.log(err);
       }
     });
-  } else {
-    console.log(errors);
-    res.redirect('/signup')
-  }
 });
 
 app.get("/test", (req, res) => {

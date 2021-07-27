@@ -136,7 +136,7 @@ app.get("/test/domain", (req, res) => {
     console.log(now);
     console.log(activ);
 
-    if(now >= activ){
+    if(now <= activ){
         res.render("domtest", {
         ques: ques,
       });

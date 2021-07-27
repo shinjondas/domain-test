@@ -133,9 +133,10 @@ app.get("/test/domain", (req, res) => {
   ) {
     var now = new Date().getTime();
     var activ= new Date("July 27, 2021 12:48:00").getTime();
+    console.log(now);
+
     if(now >= activ){
-      console.log(now);
-      res.render("domtest", {
+        res.render("domtest", {
         ques: ques,
       });
     }

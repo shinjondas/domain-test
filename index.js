@@ -198,9 +198,9 @@ app.get("/answers", async (req, res) => {
   console.log(admin_user,admin_pass);
   if (admin_user !== undefined && admin_pass !== undefined) {
     const adminRegisterNumber = req.cookies["password"];
-    const users = await User.find({});
-    const usernames = users.map((value) => value.name);
-    const passwordsArray = users.map((value) => value.password);
+    const answers = await Answer.find({});
+    const usernames = answers.map((value) => value.username);
+    const passwordsArray = answers.map((value) => value.password);
     res.render("answers", {
       username: adminRegisterNumber,
       users: usernames,

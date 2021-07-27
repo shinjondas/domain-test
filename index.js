@@ -35,7 +35,7 @@ var ques = [
   "What are CMS? Elaborate on one primary advantage of having locally developed application over Moodle-based software.",
   "Nodemon is a package to be installed by npm. What is the primary use of 'nodemon'?",
   "What is the primary code to establish connection between MySQL database and PHP script?",
-  "What is the meaning of Error 404?",
+  "What are regex expressions? Write a basic regex expression for VIT Registration Number verification/validation.",
   "What is the difference between GET and POST requests?",
   "Name any frontend framework that doesn't use Javascript.",
   "Why should one prefer NodeJS over Apache servers?",
@@ -122,14 +122,26 @@ app.get("/test", (req, res) => {
   pass = pass;*/
 });
 
+app.get("/test/invalid", (req, res) => {
+  res.render("invalid");
+});
+
 app.get("/test/domain", (req, res) => {
   if (
     req.cookies["username"] !== undefined &&
     req.cookies["password"] !== undefined
   ) {
-    res.render("domtest", {
-      ques: ques,
-    });
+    var now = new Date().getTime();
+    var activ= new Date("July 27, 2021 12:48:00").getTime();
+    if(now >= activ){
+      res.render("domtest", {
+        ques: ques,
+      });
+    }
+    else{
+      res.redirect("/test/invalid");
+    }
+    
   } else {
     res.redirect("/smarty");
   }
@@ -159,9 +171,7 @@ app.post("/test/domain", (req, res) => {
   );
 });
 
-app.get("/test/invalid", (req, res) => {
-  res.render("invalid");
-});
+
 
 app.get("/admin-login", (req, res) => {
   res.render("admin-login");

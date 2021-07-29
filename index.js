@@ -250,7 +250,6 @@ app.get("/answers/show", (req, res) => {
   if (admin_user != undefined && admin_pass != undefined) {
     let datetime = req.cookies["datetime"];
     // let answers = req.cookies["answers"];
-    console.log(answers, datetime);
     // if (answers === null || answers === undefined) {
     //   answers = ["Not Attempted"];
     // }

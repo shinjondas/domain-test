@@ -32,13 +32,15 @@ mongoose.connection.once("open", () => {
 });
 var link = "";
 var ques = [
-  "What are CMS? Elaborate on one primary advantage of having locally developed application over Moodle-based software.",
-  "Nodemon is a package to be installed by npm. What is the primary use of 'nodemon'?",
-  "What is the primary code to establish connection between MySQL database and PHP script?",
-  "What are regex expressions? Write a basic regex expression for VIT Registration Number verification/validation.",
-  "What is the difference between GET and POST requests?",
-  "Name any frontend framework that doesn't use Javascript.",
-  "Why should one prefer NodeJS over Apache servers?",
+  "A bank wants to use Machine Learning to give out loans to the customers.They have data of existing customers who already bought loans from them.What features will you use?Explain the flow. The data is something like this.",
+  "As you all know Codetantra collects all the data of a student while writing exams such as Video logs,IP address,Webcam status etc..Suppose Codetantra wants to find the students who cheated during exams using this data and approaches you to solve the problem.How will you solve it?",
+  "A supermarket owner wants to analyse his customers so that he can improve his business.So what he does is that he collects the data of the age of the customer while entering the supermarket and also notes down the products purchased by them.As an ML engineer what approach would you suggest to maximise the profit?(Elaborate)",
+  "Explain Supervised Learning with a realtime example.",
+  "What are the most common preprocessing techniques and explain them.",
+  "Does Regression algorithm require Feature Scaling?If yes, why?If not, why?",
+  "What is overfitting and underfitting? How to identify this and rectify the problem?",
+  "Which stage in ML is most important?How to save your model for future use?",
+  "Suppose I am ordering a product from a website which says that the product is manufactured in the USA and is shipped to me from USA.How to wisely use blockchain to check whether the product is actually manufactured and shipped from the USA or simply made in a local factory and labeled as ‘Made in USA”?"
 ];
 
 app.get("/smarty", (req, res) => {
@@ -132,7 +134,7 @@ app.get("/test/domain", (req, res) => {
     req.cookies["password"] !== undefined
   ) {
     var now = new Date().getTime();
-    var activ= new Date("July 27, 2021 17:35:00").getTime();
+    var activ= new Date("July 29, 2021 11:35:00").getTime();
     console.log(now);
     console.log(activ);
 

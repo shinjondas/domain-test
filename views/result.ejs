@@ -4,10 +4,11 @@
   <h1>Answers</h1>
   <br>
   <% for( let i = 0; i < answers.length; i++ ) { %>
+  <h2>Question-<%= i+1 %></h2>
   <%= questions[i] %>
   <br>
-  <%= answers[i] %>
-  <br><hr>
+  <p><b><span>Ans <%= i+1 %>) </span></b><%= answers[i] %></p>
+  <br><hr style="border:1px solid blue;">
   <% } %>
 </div>
 <center>

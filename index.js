@@ -40,9 +40,9 @@ var ques = [
   "Does Regression algorithm require Feature Scaling?If yes, why?If not, why?",
   "What is overfitting and underfitting? How to identify this and rectify the problem?",
   "Which stage in ML is most important?How to save your model for future use?",
-  "Suppose I am ordering a product from a website which says that the product is manufactured in the USA and is shipped to me from USA.How to wisely use blockchain to check whether the product is actually manufactured and shipped from the USA or simply made in a local factory and labeled as ‘Made in USA”?"
+  "Suppose I am ordering a product from a website which says that the product is manufactured in the USA and is shipped to me from USA.How to wisely use blockchain to check whether the product is actually manufactured and shipped from the USA or simply made in a local factory and labeled as ‘Made in USA”?",
 ];
-
+var answers;
 app.get("/smarty", (req, res) => {
   res.render("smarty");
 });
@@ -84,7 +84,7 @@ app.post("/", (req, res) => {
     );
   } else {
     console.log(errors);
-    res.redirect('/');
+    res.redirect("/");
   }
 });
 
@@ -93,16 +93,16 @@ app.get("/signup", (req, res) => {
 });
 
 app.post("/signup", (req, res) => {
-    User.create(req.body.user, function (err, user) {
+  User.create(req.body.user, function (err, user) {
+    console.log(user);
+    try {
       console.log(user);
-      try {
-        console.log(user);
-        logU = true;
-        res.redirect("/");
-      } catch (err) {
-        console.log(err);
-      }
-    });
+      logU = true;
+      res.redirect("/");
+    } catch (err) {
+      console.log(err);
+    }
+  });
 });
 
 app.get("/test", (req, res) => {
@@ -134,19 +134,17 @@ app.get("/test/domain", (req, res) => {
     req.cookies["password"] !== undefined
   ) {
     var now = new Date().getTime();
-    var activ= new Date("July 29, 2021 19:00:00").getTime();
+    var activ = new Date("July 29, 2021 19:00:00").getTime();
     console.log(now);
     console.log(activ);
 
-    if(now >= activ){
-        res.render("domtest", {
+    if (now >= activ) {
+      res.render("domtest", {
         ques: ques,
       });
-    }
-    else{
+    } else {
       res.redirect("/test/invalid");
     }
-    
   } else {
     res.redirect("/smarty");
   }
@@ -176,8 +174,6 @@ app.post("/test/domain", (req, res) => {
   );
 });
 
-
-
 app.get("/admin-login", (req, res) => {
   res.render("admin-login");
 });
@@ -197,7 +193,7 @@ app.post("/admin-login", (req, res) => {
 app.get("/answers", async (req, res) => {
   let admin_user = req.cookies["adminID"];
   let admin_pass = req.cookies["adminPass"];
-  console.log(admin_user,admin_pass);
+  console.log(admin_user, admin_pass);
   if (admin_user !== undefined && admin_pass !== undefined) {
     const adminRegisterNumber = req.cookies["password"];
     const answers = await Answer.find({});
@@ -213,66 +209,54 @@ app.get("/answers", async (req, res) => {
   }
 });
 
-app.post("/answers", (req, res) => {
-  let user1 = req.body.users;
-  console.log(user1);
-  Answer.findOne(
-    {
-      username: user1,
-    },
-    (err, user) => {
-      if (!err) {
-        let d = user._id.getTimestamp();
-        let dt =
-          d.getFullYear() +
-          "-" +
-          (d.getMonth() + 1) +
-          "-" +
-          d.getDate() +
-          " " +
-          (d.getHours() + 5) +
-          ":" +
-          (d.getMinutes() + 30) +
-          ":" +
-          d.getSeconds();
-        if (d.getMinutes() >= 30) {
-          dt =
-            d.getFullYear() +
-            "-" +
-            (d.getMonth() + 1) +
-            "-" +
-            d.getDate() +
-            " " +
-            (d.getHours() + 6) +
-            ":" +
-            (d.getMinutes() - 30) +
-            ":" +
-            d.getSeconds();
-        }
-        res.cookie("answers", user);
-        res.cookie("datetime", dt);
-        res.redirect("/answers/show");
-      } else {
-        console.error(err);
-        res.redirect("/answers");
-      }
-    }
-  );
+app.post("/answers", async (req, res) => {
+  let pass = req.body.users;
+  let found_user = await Answer.findOne({ password: pass });
+  let d = found_user._id.getTimestamp();
+  let dt =
+    d.getFullYear() +
+    "-" +
+    (d.getMonth() + 1) +
+    "-" +
+    d.getDate() +
+    " " +
+    (d.getHours() + 5) +
+    ":" +
+    (d.getMinutes() + 30) +
+    ":" +
+    d.getSeconds();
+  if (d.getMinutes() >= 30) {
+    dt =
+      d.getFullYear() +
+      "-" +
+      (d.getMonth() + 1) +
+      "-" +
+      d.getDate() +
+      " " +
+      (d.getHours() + 6) +
+      ":" +
+      (d.getMinutes() - 30) +
+      ":" +
+      d.getSeconds();
+  }
+  answers=found_user.answer;
+  res.cookie("datetime", dt);
+  res.redirect('/answers/show');
 });
 
 app.get("/answers/show", (req, res) => {
   let admin_user = req.cookies["adminID"];
   let admin_pass = req.cookies["adminPass"];
-  if (admin_user != undefined && admin_pass != undefined){
+  if (admin_user != undefined && admin_pass != undefined) {
     let datetime = req.cookies["datetime"];
-    let answers = req.cookies["answers"];
-    if (answers.answer === null) {
-      answers.answer = ["Not Attempted"];
-      answers.question = [""];
-    }
+    // let answers = req.cookies["answers"];
+    console.log(answers, datetime);
+    // if (answers === null || answers === undefined) {
+    //   answers = ["Not Attempted"];
+    // }
     res.render("result", {
-      questions: answers["question"],
-      answers: answers["answer"],
+      questions: answers === ["Not Attempted"] ? [""] : ques,
+      answers: answers,
       datetime: datetime,
     });
   } else {
@@ -281,6 +265,7 @@ app.get("/answers/show", (req, res) => {
 });
 
 app.post("/answers/show", (req, res) => {
+  answers=[];
   res.redirect("/answers");
 });
 

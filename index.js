@@ -215,6 +215,7 @@ app.get("/answers", async (req, res) => {
 
 app.post("/answers", (req, res) => {
   let user1 = req.body.users;
+  console.log(user1);
   Answer.findOne(
     {
       username: user1,

@@ -214,10 +214,10 @@ app.get("/answers", async (req, res) => {
 });
 
 app.post("/answers", (req, res) => {
-  let pass = req.body.users;
+  let user1 = req.body.users;
   Answer.findOne(
     {
-      password: pass,
+      username: user1,
     },
     (err, user) => {
       if (!err) {

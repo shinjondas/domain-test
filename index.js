@@ -32,15 +32,13 @@ mongoose.connection.once("open", () => {
 });
 var link = "";
 var ques = [
-  "A bank wants to use Machine Learning to give out loans to the customers.They have data of existing customers who already bought loans from them.What features will you use?Explain the flow. The data is something like this.",
-  "As you all know Codetantra collects all the data of a student while writing exams such as Video logs,IP address,Webcam status etc..Suppose Codetantra wants to find the students who cheated during exams using this data and approaches you to solve the problem.How will you solve it?",
-  "A supermarket owner wants to analyse his customers so that he can improve his business.So what he does is that he collects the data of the age of the customer while entering the supermarket and also notes down the products purchased by them.As an ML engineer what approach would you suggest to maximise the profit?(Elaborate)",
-  "Explain Supervised Learning with a realtime example.",
-  "What are the most common preprocessing techniques and explain them.",
-  "Does Regression algorithm require Feature Scaling?If yes, why?If not, why?",
-  "What is overfitting and underfitting? How to identify this and rectify the problem?",
-  "Which stage in ML is most important?How to save your model for future use?",
-  "Suppose I am ordering a product from a website which says that the product is manufactured in the USA and is shipped to me from USA.How to wisely use blockchain to check whether the product is actually manufactured and shipped from the USA or simply made in a local factory and labeled as ‘Made in USA”?",
+  "Arduino and RPi are the most used development boards in the market at the moment, what's the difference between both and write a program to generate the fibonacci series till 10 in both Arduino and RPi.","As you all know CodeTantra collects all the data of a student while writing exams such as Video logs,IP address,Webcam status etc..Suppose Codetantra wants to find the students who cheated during exams using this data and approaches you to solve the problem.How will you solve it?",
+  "Arduino has default libraries to use some sensors. Write the code to display the temperature from DHT22 on an LCD screen in Arduino IDE.",
+  "When it comes to connecting interfaces, Arduino offers a variety of ports to connect other peripheral devices. Write the code that displays numbers on a pixel board and increase it As a button is pressed",
+  "RPi offers a great amount of versatility over devices as it uses python for making connections and communication between the devices. Write the code to make use of the motion sensor and turn led on when motion is detected with RPi",
+  "Let's say you're making a line follower robot which uses two sensors(one on the left and other one on the right to detect if a bot is on the line or not) . Write the code to program it to follow the line(you have to code the line following algorithm)",
+  "Since we make use of sensors a lot to collect data, Write the code to connect ESP8266 to a WiFi network and send the data to ThingSpeak cloud platform with it in Arduino IDE(Use thingspeak library for sending data)",
+  "Talking about microcontrollers and microprocessors, Write 3 major differences between them and explain the concept of Registers in programming them."
 ];
 var answers;
 app.get("/smarty", (req, res) => {
@@ -134,7 +132,7 @@ app.get("/test/domain", (req, res) => {
     req.cookies["password"] !== undefined
   ) {
     var now = new Date().getTime();
-    var activ= new Date("July 29, 2021 22:00:00").getTime();
+    var activ= new Date("July 31, 2021 20:30:00").getTime();
     console.log(now);
     console.log(activ);
 

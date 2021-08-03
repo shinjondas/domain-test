@@ -32,6 +32,8 @@ mongoose.connection.once("open", () => {
 });
 var link = "";
 var ques = [
+  "Registration Number:",
+  "Name:",
   "While using ExpressJS alongside NodeJS, there is one particular package that has to be installed to get access to all data input in the front-end. Name the package. Elucidate use of package using 1 HTML view and a server-side data processing code.",
   "Elaborate how to fetch data from an API (say https://stats.nba.com/stats/boxscore) using XML HTTP requests. Display data in a table using JS.",
   "Whether using No-SQL or SQL based database processing languages, one thing to remember is to extract data from the database/collection when certain conditions are set. In MongoDB/SQL/SQL+ , elaborate how to fetch one entry corresponding to the following conditions: collection/table name is Customers; data to be fetched should have all names starting with “S” and should have number of orders greater than or equal to 500.",

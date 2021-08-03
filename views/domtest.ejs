@@ -18,7 +18,7 @@
         <form id="myForm" action="/test/domain" method="POST">
           <% for( let i = 0; i < ques.length; i++ ) { %>
             <div class="form-group">
-              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %></label>
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
               <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="a[]" required></textarea>
             </div>
           <% } %>

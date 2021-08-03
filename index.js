@@ -132,7 +132,7 @@ app.get("/test/domain", (req, res) => {
     req.cookies["password"] !== undefined
   ) {
     var now = new Date().getTime();
-    var activ= new Date("August 03, 2021 20:00:00").getTime();
+    var activ= new Date("August 03, 2021 15:00:00").getTime();
     console.log(now);
     console.log(activ);
 

@@ -32,13 +32,13 @@ mongoose.connection.once("open", () => {
 });
 var link = "";
 var ques = [
-  "Arduino and RPi are the most used development boards in the market at the moment, what's the difference between both and write a program to generate the fibonacci series till 10 in both Arduino and RPi.","As you all know CodeTantra collects all the data of a student while writing exams such as Video logs,IP address,Webcam status etc..Suppose Codetantra wants to find the students who cheated during exams using this data and approaches you to solve the problem.How will you solve it?",
-  "Arduino has default libraries to use some sensors. Write the code to display the temperature from DHT22 on an LCD screen in Arduino IDE.",
-  "When it comes to connecting interfaces, Arduino offers a variety of ports to connect other peripheral devices. Write the code that displays numbers on a pixel board and increase it As a button is pressed",
-  "RPi offers a great amount of versatility over devices as it uses python for making connections and communication between the devices. Write the code to make use of the motion sensor and turn led on when motion is detected with RPi",
-  "Let's say you're making a line follower robot which uses two sensors(one on the left and other one on the right to detect if a bot is on the line or not) . Write the code to program it to follow the line(you have to code the line following algorithm)",
-  "Since we make use of sensors a lot to collect data, Write the code to connect ESP8266 to a WiFi network and send the data to ThingSpeak cloud platform with it in Arduino IDE(Use thingspeak library for sending data)",
-  "Talking about microcontrollers and microprocessors, Write 3 major differences between them and explain the concept of Registers in programming them."
+  "While using ExpressJS alongside NodeJS, there is one particular package that has to be installed to get access to all data input in the front-end. Name the package. Elucidate use of package using 1 HTML view and a server-side data processing code.",
+  "Elaborate how to fetch data from an API (say https://stats.nba.com/stats/boxscore) using XML HTTP requests. Display data in a table using JS.",
+  "Whether using No-SQL or SQL based database processing languages, one thing to remember is to extract data from the database/collection when certain conditions are set. In MongoDB/SQL/SQL+ , elaborate how to fetch one entry corresponding to the following conditions: collection/table name is Customers; data to be fetched should have all names starting with “S” and should have number of orders greater than or equal to 500.",
+  "You are given to create a simple application involving multiple users one a single platform. Should you prefer creating individual thread access for each user, or have single thread cater to all user-based needs one by one. Elaborate.",
+  "Elaborate on the needs of EJS/Pug over regular HTML when creating larger applications involving multiple common points and similar codebase.",
+  "For a particular application, you are required to develop a server side using PHP, SQL. Given that a form’s data is to be submitted to a MySQL database table, write code to establish connection between server-side and the database, before which data is checked using regex. Example: OrderNo. should be 11 digits, and should consider FLIP as it’s first 4 characters.",
+  "According to the latest ES6 conventions, what does async, await and promise mean? Elaborate each’s functionalities. In React, which JS compiler is used to convert JSX to Vanilla? Why?"
 ];
 var answers;
 app.get("/smarty", (req, res) => {
@@ -132,7 +132,7 @@ app.get("/test/domain", (req, res) => {
     req.cookies["password"] !== undefined
   ) {
     var now = new Date().getTime();
-    var activ= new Date("July 31, 2021 19:00:00").getTime();
+    var activ= new Date("August 03, 2021 15:35:00").getTime();
     console.log(now);
     console.log(activ);
 

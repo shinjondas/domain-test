@@ -1,6 +1,14 @@
 <%- include("header")-%>
 <body oncontextmenu="return false;">
   <style>
+    .selectlink{
+      -webkit-touch-callout:unset;
+    -webkit-user-select:text; 
+     -khtml-user-select:text;
+       -moz-user-select: text; 
+        -ms-user-select:unset; 
+            user-select:text;
+    }
     body{
     -webkit-touch-callout: none;
     -webkit-user-select: none; 
@@ -16,13 +24,203 @@
   </nav>
     <div class="container test" style="margin-top:10vh;margin-bottom: 20vh;">
       <h5>In case you are unable to answer a question, fill textarea as <b>N/A</b></h5>
+      <div style="margin-top: 2em;"></div>
         <form id="myForm" action="/test/domain" method="POST">
-          <% for( let i = 0; i < ques.length; i++ ) { %>
+          <% for( let i = 0; i <2 ; i++ ) { %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" name="a[]" required></textarea>
+            </div>
+          <% } %>
+          <div style="margin-top: 2.5em;"></div>
+          <h3 style="text-align: center;">APTITUDE</h3>
+          <div style="margin-top: 1.5em;"></div>
+          <% for( let i = 2; i <4 ; i++ ) { %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" name="a[]" required></textarea>
+            </div>
+          <% } %>
+          <% for( let i = 4; i <5 ; i++ ) { %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
+              <p style="font-weight: bold;margin-bottom: 0;">Options:</p>
+              <p style="margin-bottom: 0;">T > Q</p>
+              <p style="margin-bottom: 0;">P &ge; S</p>
+              <p style="margin-bottom: 0;">Q > T</p>
+              <p>P > N</p>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" name="a[]" required></textarea>
+            </div>
+          <% } %>
+          <% for( let i = 5; i <6 ; i++ ) { %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
+              <p style="font-weight: bold;margin-bottom: 0;">Options:</p>
+              <p style="margin-bottom: 0;">40</p>
+              <p style="margin-bottom: 0;">35</p>
+              <p style="margin-bottom: 0;">45</p>
+              <p>50</p>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" name="a[]" required></textarea>
+            </div>
+          <% } %>
+          <% for( let i = 6; i <7 ; i++ ) { %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
+              <p style="font-weight: bold;margin-bottom: 0;">Options:</p>
+              <p style="margin-bottom: 0;">24336</p>
+              <p style="margin-bottom: 0;">24025</p>
+              <p style="margin-bottom: 0;">23716</p>
+              <p>26244</p>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" name="a[]" required></textarea>
+            </div>
+          <% } %>
+          <% for( let i = 7; i <8 ; i++ ) { %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" name="a[]" required></textarea>
+            </div>
+          <% } %>
+          <% for( let i = 8; i <9 ; i++ ) { %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
+              <p style="font-weight: bold;margin-bottom: 0;">Options:</p>
+              <p style="margin-bottom: 0;">10</p>
+              <p style="margin-bottom: 0;">15</p>
+              <p style="margin-bottom: 0;">30</p>
+              <p>25</p>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" name="a[]" required></textarea>
+            </div>
+          <% } %>
+          <% for( let i = 9; i <10 ; i++ ) { %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
+              <p style="font-weight: bold;margin-bottom: 0;">Options:</p>
+              <p style="margin-bottom: 0;">36 years</p>
+              <p style="margin-bottom: 0;">45 years</p>
+              <p style="margin-bottom: 0;">32 years</p>
+              <p>40 years</p>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" name="a[]" required></textarea>
+            </div>
+          <% } %>
+          <% for( let i = 10; i <11 ; i++ ) { %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
+              <p style="font-weight: bold;margin-bottom: 0;">Options:</p>
+              <p style="margin-bottom: 0;">15</p>
+              <p style="margin-bottom: 0;">12</p>
+              <p style="margin-bottom: 0;">10</p>
+              <p>16</p>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" name="a[]" required></textarea>
+            </div>
+          <% } %>
+          <% for( let i = 11; i <12 ; i++ ) { %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
+              <p style="font-weight: bold;margin-bottom: 0;">Options:</p>
+              <p style="margin-bottom: 0;">15 times</p>
+              <p style="margin-bottom: 0;">30 times</p>
+              <p style="margin-bottom: 0;">31 times</p>
+              <p>16 times</p>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" name="a[]" required></textarea>
+            </div>
+          <% } %>
+          <div style="margin-top: 2.5em;"></div>
+          <h3 style="text-align: center;">HARDWARE</h3>
+          <div style="margin-top: 1.5em;"></div>
+          <% for( let i = 12; i <16 ; i++ ) { %>
             <div class="form-group">
               <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
               <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="a[]" required></textarea>
             </div>
           <% } %>
+          <% for( let i = 16; i <17 ; i++ ) { %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
+              <p style="font-weight: bold;margin-bottom: 0;">Options:</p>
+              <p style="margin-bottom: 0;">40 pA</p>
+              <p style="margin-bottom: 0;">50 pA</p>
+              <p style="margin-bottom: 0;">35 pA</p>
+              <p>45 pA</p>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="a[]" required></textarea>
+            </div>
+          <% } %>
+          <div style="margin-top: 2.5em;"></div>
+          <h3 style="text-align: center;">SOFTWARE</h3>
+          <div style="margin-top: 1.5em;"></div>
+          <% for( let i = 17; i <18 ; i++ ) { %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
+              <div style="margin-left: 2em;">
+                <p style="margin-bottom: 0;">List = list(“string”)</p>
+                <p>print List</p>
+              </div>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="a[]" required></textarea>
+            </div>
+          <% } %>
+          <% for( let i = 18; i <20 ; i++ ) { %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="a[]" required></textarea>
+            </div>
+          <% } %>
+          <% for( let i = 20; i <21 ; i++ ) { %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
+              <div style="margin-left: 2em;">
+                <p style="margin-bottom: 0;">10 = step</p>
+                <p style="margin-bottom: 0;">for e in the range(0 , step):</p>
+                <p style="margin-bottom: 0;margin-left: 2em">If e%2==0:</p>
+                <p style="margin-bottom: 0;margin-left: 4em">print(e + 1)</p>
+                <p style="margin-bottom: 0;margin-left: 2em">else:</p>
+                <p style="margin-left: 4em">print(e – 1</p>
+              </div>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="a[]" required></textarea>
+            </div>
+          <% } %>
+          <% for( let i = 21; i <22 ; i++ ) { %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
+              <div style="margin-left: 2em;">
+                <p style="margin-bottom: 0;">a = input("Enter any number")</p>
+                <p style="margin-bottom: 0;">if a%2=0</p>
+                <p style="margin-bottom: 0;margin-left: 2em">print(Even number)</p>
+                <p style="margin-bottom: 0;">Else</p>
+                <p style="margin-left: 2em">print(Odd number)</p>
+              </div>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="a[]" required></textarea>
+            </div>
+          <% } %>
+          <div style="margin-top: 2.5em;"></div>
+          <h3 style="text-align: center;">MANAGEMENT</h3>
+          <div style="margin-top: 1.5em;"></div>
+          <% for( let i = 22; i <27 ; i++ ) { %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="a[]" required></textarea>
+            </div>
+          <% } %>
+          <div style="margin-top: 2.5em;"></div>
+          <h3 style="text-align: center;">EDITORIAL</h3>
+          <div style="margin-top: 1.5em;"></div>
+          <% for( let i = 27; i <28 ; i++ ) { %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="a[]" required></textarea>
+            </div>
+          <% } %>
+          <% for( let i = 28; i <29 ; i++ ) { %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
+              <p style="color: blue;margin-top: 0;margin-bottom: 2em;font-weight: bold;" class="selectlink">https://drive.google.com/drive/folders/18rVmY_SSJyrlH3DCP4YV0E-vt-KabOUP?usp=sharing</p>
+            </div>
+          <% } %>
+          <% for( let i = 29; i <32 ; i++ ) { %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Question <%= i+1 %>:<br><%= ques[i] %><span style="color:red">*</span></label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="a[]" required></textarea>
+            </div>
+          <% } %>
+
               <center>
                 <div class="btn-group" role="group">
                     <a href="/test" class="btn btn-danger" style="padding:0.75vw 1vw">Exit</a>

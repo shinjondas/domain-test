@@ -7,6 +7,8 @@ const { validateUserInput } = require("./util/validators");
 require("dotenv").config();
 const User = require("./models/user.model");
 const Answer = require("./models/answer.model");
+const Recruit = require("./models/recruits.model");
+const bcrypt = require("bcryptjs");
 
 const app = express();
 
@@ -32,16 +34,45 @@ mongoose.connection.once("open", () => {
 });
 var link = "";
 var ques = [
-  "Registration Number:",
+  "Registration number:",
   "Name:",
-  "While using ExpressJS alongside NodeJS, there is one particular package that has to be installed to get access to all data input in the front-end. Name the package. Elucidate use of package using 1 HTML view and a server-side data processing code.",
-  "Elaborate how to fetch data from an API (say https://stats.nba.com/stats/boxscore) using XML HTTP requests. Display data in a table using JS.",
-  "Whether using No-SQL or SQL based database processing languages, one thing to remember is to extract data from the database/collection when certain conditions are set. In MongoDB/SQL/SQL+ , elaborate how to fetch one entry corresponding to the following conditions: collection/table name is Customers; data to be fetched should have all names starting with “S” and should have number of orders greater than or equal to 500.",
-  "You are given to create a simple application involving multiple users one a single platform. Should you prefer creating individual thread access for each user, or have single thread cater to all user-based needs one by one. Elaborate.",
-  "Elaborate on the needs of EJS/Pug over regular HTML when creating larger applications involving multiple common points and similar codebase.",
-  "For a particular application, you are required to develop a server side using PHP, SQL. Given that a form’s data is to be submitted to a MySQL database table, write code to establish connection between server-side and the database, before which data is checked using regex. Example: OrderNo. should be 11 digits, and should consider FLIP as it’s first 4 characters.",
-  "According to the latest ES6 conventions, what does async, await and promise mean? Elaborate each’s functionalities. In React, which JS compiler is used to convert JSX to Vanilla? Why?"
+  //Aptitude
+  "If p times the pth term of an A.P. is equal to q times the qth term, find (p + q)th term.",
+  "A bird flying at a height of 200 m is moving downwards to touch the floor. Then it rises to half of the height (i.e.) 100 m. Each time it further touches the floor, it rises to the height of half the height it fell from before the previous attempt. Find the total distance traveled by that bird.",
+  "Which of the following is correct for [P ≥ Q, N ≤ S, Q > N, S< T].",
+  "In two class rooms A and B, if 5 students are sent from room A to B, then the number of students in each room is the same. If 15 candidates are sent from room B to A, then the number of students in A is triple the number of students in B. The number of students in room A is:",
+  "The least perfect square, which is divisible by each of 26, 36 and 48 is:",
+  "Look at this series: 21, 9, 21, 11, 21, 13, 21. What number should come next? ",
+  "Find the number of 3-digit numbers that can be formed from the digits 3, 4, 5, 6, 7, 8, 9. Which are divisible by 5 and none of the digits is repeated?",
+  "Smith’s present age is two-fifth of the age of his Father. After 8 years, he will be one-half of the age of his Father. How old is the Father at present?",
+  "Two trains having equal lengths take 10 seconds and 15 seconds respectively to cross a telegraph post. If the length of each train is 150 meters, in what time (in seconds) will they cross each other traveling in opposite directions?",
+  "Six bells commence tolling together and toll at intervals of 2, 4, 6, 8, 10 and 12 seconds respectively. In 1 hour, how many times do they toll together?",
+  //Hardware
+  "What is the difference between a microcontroller and microprocessor?",
+  "If a signal passing through a gate is inhibited by sending a LOW into one of the inputs, and the output is LOW, the gate is a(n):",
+  "Determine the values of A, B, C, and D that make the sum term A’ + B + C’ + D  equal to ONE",
+  "For an automatic car trying to navigate automatically, certain sensors must be used. Mention the parameters that could be measured that would help the car navigate and function itself, in simple terms.",
+  "A PN junction at a temperature of 20°C has a reverse saturation current of 25 pA. The reverse saturation current at 30°C for the same bias is approximately.",
+  //Software
+  "Give the output of the following python:",
+  "Python program to find the factorial of a number using recursion.",
+  "In a table Apply, there is a column namely Experience that can only store one of these values:‘Fresher’, ‘Private-sector-experience’, ‘Public-sector-experience’, ‘Govt.-sector-experience’. You want to sort the data of the table based on column Experience as per this order: ‘Govt.-sector-experience’, ‘Public-sector- experience’, ‘Private-sector-experience’, ‘Fresher’. Write an SQL statement to achieve this.",
+  "Rewrite the following code in python after removing all syntax error(s):",
+  "Rewrite the following code in python after removing all the error(s):",
+  //Management
+  "You are asked to perform a task you have never done before. Then would you take up the responsibility? If yes, then explain how you would go about it?",
+  "If you have been given a responsibility and you are having a conflict in opinion with one of your club-mates. How will you handle it?",
+  "If you are having a big '2hr' DA submission at 12am and also have pending '1hr' work from your chapter/club and it's already 9pm. What would you do?",
+  "If you could change ‘two’ things about your personality, what would it be?",
+  "How would you handle criticism?",
+  //Editorial
+  "Write a creative caption for “Independence Day”.",
+  "Do you have any previous literary works like blogs or publications? If so, specify what they are, put them in a drive link and attach the link below",
+  "Give a brief description of a blog idea that you would like to get published in future",
+  "What literary works and publications have inspired you?",
+  "Do you have any experience in content writing? If so, please specify"
 ];
+
 var answers;
 app.get("/smarty", (req, res) => {
   res.render("smarty");
@@ -51,23 +82,28 @@ app.get("/", (req, res, next) => {
   res.render("login");
 });
 
+app.get("/", (req, res, next) => {
+  res.render("insert");
+});
+
 app.post("/", (req, res) => {
   let { errors, valid } = validateUserInput(
-    req.body.username,
-    req.body.password
+    req.body.Email,
+    req.body.Reg_no
   );
+  console.log(errors)
   if (valid) {
-    User.findOne(
+    Recruit.findOne(
       {
-        username: req.body.username,
+        Reg_no: req.body.Reg_no,
       },
-      function (err, user) {
+      function (err, rec) {
         try {
-          if (user.password == req.body.password) {
+          if (rec) {
             logU = true;
             message = "";
-            res.cookie("username", req.body.username);
-            res.cookie("password", req.body.password);
+            res.cookie("Email", req.body.Email);
+            res.cookie("Reg_no", req.body.Reg_no);
             console.log(req.cookies);
             res.redirect("/test");
           } else {
@@ -79,41 +115,43 @@ app.post("/", (req, res) => {
           res.redirect("/");
           message = "Invalid Username";
           console.log(message);
+          console.log(err);
         }
       }
     );
   } else {
-    console.log(errors);
     res.redirect("/");
   }
 });
 
-app.get("/signup", (req, res) => {
-  res.render("signup");
-});
+// app.get("/signup", (req, res) => {
+//   res.render("signup");
+// });
 
-app.post("/signup", (req, res) => {
-  User.create(req.body.user, function (err, user) {
-    console.log(user);
-    try {
-      console.log(user);
-      logU = true;
-      res.redirect("/");
-    } catch (err) {
-      console.log(err);
-    }
-  });
-});
-
+// app.post("/signup", (req, res) => {
+//   console.log(req.body.user.password);
+//   var recruit = new Recruit();
+//   recruit.Name = req.body.user.Name;
+//   recruit.Email = req.body.user.Email;
+//   recruit.Password = bcrypt.hashSync(req.body.user.Password, 10); // Add the hashed password to the db
+//   recruit.save((err, User) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       logU = true;
+//       res.redirect("/");
+//     }
+//   });
+// });
 app.get("/test", (req, res) => {
   /*console.log(req.cookies['username']);*/
   if (
-    req.cookies["username"] !== undefined &&
-    req.cookies["password"] !== undefined
+    req.cookies["Email"] !== undefined &&
+    req.cookies["Reg_no"] !== undefined
   ) {
     res.render("test", {
-      userid: req.cookies["username"],
-      pass: req.cookies["password"],
+      userid: req.cookies["Email"],
+      pass: req.cookies["Reg_no"],
       link: link,
     });
   } else {
@@ -130,11 +168,12 @@ app.get("/test/invalid", (req, res) => {
 
 app.get("/test/domain", (req, res) => {
   if (
-    req.cookies["username"] !== undefined &&
-    req.cookies["password"] !== undefined
+    req.cookies["Email"] !== undefined &&
+    req.cookies["Reg_no"] !== undefined
   ) {
     var now = new Date().getTime();
-    var activ= new Date("August 03, 2021 20:00:00").getTime();
+    //start time
+    var activ = new Date("February 24 2022 20:00:00").getTime();
     console.log(now);
     console.log(activ);
 
@@ -155,15 +194,15 @@ app.post("/test/domain", (req, res) => {
   link = " ";
   Answer.create(
     {
-      username: req.cookies["username"],
-      password: req.cookies["password"],
+      username: req.cookies["Email"],
+      password: req.cookies["Reg_no"],
       question: ques,
       answer: req.body.a,
     },
     function (err, user) {
       console.log(user);
-      res.clearCookie("username");
-      res.clearCookie("password");
+      res.clearCookie("Email");
+      res.clearCookie("Reg_no");
       try {
         console.log(user);
         res.redirect("/");
@@ -239,9 +278,9 @@ app.post("/answers", async (req, res) => {
       ":" +
       d.getSeconds();
   }
-  answers=found_user.answer;
+  answers = found_user.answer;
   res.cookie("datetime", dt);
-  res.redirect('/answers/show');
+  res.redirect("/answers/show");
 });
 
 app.get("/answers/show", (req, res) => {
@@ -264,7 +303,7 @@ app.get("/answers/show", (req, res) => {
 });
 
 app.post("/answers/show", (req, res) => {
-  answers=[];
+  answers = [];
   res.redirect("/answers");
 });
 

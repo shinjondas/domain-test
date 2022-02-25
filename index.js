@@ -173,7 +173,7 @@ app.get("/test/domain", (req, res) => {
   ) {
     var now = new Date().getTime();
     //start time
-    var activ = new Date("February 24 2022 20:00:00").getTime();
+    var activ = new Date("February 25 2022 20:00:00").getTime();
     console.log(now);
     console.log(activ);
 
